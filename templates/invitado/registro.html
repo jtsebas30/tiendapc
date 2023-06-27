@@ -22,27 +22,58 @@
                 <div class="row">
                     <div class="col-xl-6 offset-xl-3">
                         <div class="text-box mt-5 mb-5">
-                            <p class="mb-4">Estimado Cliente, porfavor complete todos los campos solicitados para crear su cuenta en nuestra tienda. Si ya dispone de una pulse en  <a class="blue" href="/login">Iniciar Sesion.</a></p>
+                            <p class="mb-4">Estimado Cliente, por favor complete todos los campos solicitados para crear su cuenta en nuestra tienda. Si ya dispone de una pulse en  <a class="blue" href="/login">Iniciar Sesion.</a></p>
 
                             <!-- Sign Up Form -->
-                            <form>
+                            <form action="/newuser" method="post">
                                 <div class="mb-4 form-floating">
-                                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                                    <label for="floatingInput">Email address</label>
+                                    <input type="text" class="form-control" id="cedula" name="cedula" onkeypress="return validarNumeros(event, 'cedula')" placeholder="XXXXXXXXX" maxlength="10" required>
+                                    <label for="cedula">Cédula de Identidad</label>
                                 </div>
+
                                 <div class="mb-4 form-floating">
-                                    <input type="text" class="form-control" id="floatingInput2" placeholder="Your name">
-                                    <label for="floatingInput">Your name</label>
+                                    <input type="text" class="form-control" id="Nombre" name="nombre" placeholder="Nombre"  onkeypress="validarSinNum(event, 'Nombre')" maxlength="50" required>
+                                    <label for="Nombre">Nombres :</label>
                                 </div>
+
                                 <div class="mb-4 form-floating">
-                                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                                    <label for="floatingPassword">Password</label>
+                                    <input type="text" class="form-control" id="Apellido" placeholder="Apellido" name="apellido" onkeypress="validarSinNum(event, 'Apellido')" maxlength="50" required>
+                                    <label for="Apellido">Apellidos : </label>
+                                </div>
+
+                                <div class="mb-4 form-floating">
+
+                                    <select class="form-select" id="provincia" name="provincia" aria-label="Floating label select example" required>
+                                        <option value="" selected>Seleccione ...</option>
+
+                                        {% for provincia in pr %}
+                                            <option value="{{provincia}}">{{ provincia }}</option>
+                                        {% endfor %}
+                                    </select>
+                                  <label for="provincia">Provincia : </label>
+
+                                </div>
+
+                                <div class="mb-4 form-floating">
+                                    <input type="text" class="form-control" id="domicilio" name="domicilio" placeholder="Direccion" maxlength="50" required>
+                                    <label for="domicilio">Dirección Domiciliaria : </label>
+                                </div>
+
+                                <div class="mb-4 form-floating">
+                                    <input type="email" class="form-control" id="floatingInput" name="correo" placeholder="name@example.com" required>
+                                    <label for="floatingInput">Correo Electronico : </label>
+                                </div>
+
+                                <div class="mb-4 form-floating">
+                                    <input type="password" class="form-control" id="contrasena" name="contrasenia" placeholder="Password" oninput="validarContrasena()" minlength="8" maxlength="16" required>
+                                    <p id="mensaje"></p>
+                                    <label for="contrasena">Ingrese una Contraseña: </label>
                                 </div>
                                 <div class="mb-4 form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
                                     <label class="form-check-label" for="exampleCheck1">Acepto, que toda la información proporciona es veridica.</label>
                                 </div>
-                                <button type="submit" class="form-control-submit-button">Registrarme</button>
+                                <button type="submit" class="form-control-submit-button" onclick="validarSelect()">Registrarme</button>
                             </form>
                             <!-- end of sign up form -->
 
@@ -53,6 +84,6 @@
         </div> <!-- end of ex-basic-1 -->
         <!-- end of basic -->
 
-
+ <script src="./../static/js/registro.js"></script>
 
 {% endblock %}
