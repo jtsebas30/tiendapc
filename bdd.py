@@ -13,8 +13,39 @@ def nuevousuario(cedula,nombre,apellido,provincia,domicilio,correo,contrasenia):
         db.commit()
         db.close()
         return True
-    except:
-        db.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("Error:", error)
         return False
+
+
+def verproductos():
+    try:
+        sql = "SELECT * FROM PRODUCTOS"
+        cursor = db.cursor()
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        cursor.close()
+
+        return data
+    except (Exception,psycopg2.DatabaseError) as error:
+        db.close()
+        print("Error:",error)
+        return None
+
+def verproductos_detalle(id):
+    try:
+        sql = "SELECT * FROM PRODUCTOS WHERE IDP=%s"
+        valores = (id)
+        cursor = db.cursor()
+        cursor.execute(sql,valores)
+        data = cursor.fetchall()
+        cursor.close()
+
+        return data
+    except (Exception,psycopg2.DatabaseError) as error:
+        db.close()
+        print("Error:",error)
+        return None
+
 
 

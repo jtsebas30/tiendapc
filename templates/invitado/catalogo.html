@@ -2,7 +2,6 @@
 
 {% block body %}
 
-
  <!-- Header -->
         <header class="ex-header">
             <div class="container">
@@ -16,22 +15,38 @@
         <!-- end of header -->
 
 <div class="container mt-4" >
-
+MARCAS
   <div class="row">
+
     <div class="col-4">
       <div class="list-group" id="list-tab" role="tablist">
-        <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">Home</a>
-        <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Profile</a>
-        <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Messages</a>
-        <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Settings</a>
+        <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">Todas las Marcas</a>
+        <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Asus</a>
+        <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Lenovo</a>
+        <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Dell</a>
       </div>
     </div>
     <div class="col-8">
       <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">...</div>
-        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
-        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
-        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+            <div class="row gx-3 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center">
+
+                {% for datos in data %}
+                    <div class="card" style="width: 18rem;">
+                          <img src=".././static/assets/{{datos[6]}}" class="card-img-top" alt="{{datos[6]}}">
+                          <div class="card-body">
+                            <h5 class="card-title">{{datos[1]}}</h5>
+                            <p class="card-text"><b>Marca :{{datos[3]}} </b> </p>
+                                <p class="card-text"><b>Precio :{{datos[5]}} </b> </p>
+                            <a href="/detalle?id={{ datos[0] }}" class="btn btn-primary">Más Información</a>
+                          </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">En Desarrollo</div>
+        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">No Disponible en construcción</div>
+        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">En Desarrollo</div>
       </div>
     </div>
   </div>

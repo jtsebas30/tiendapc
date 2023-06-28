@@ -8,7 +8,7 @@ app.secret_key = 'tid@205'
 @app.route('/pr')
 
 def prueba() -> 'html':
-  return render_template('pr.html',titulo ='Inicio')
+  return render_template('invitado/dcatalogo.html',titulo ='Inicio')
 
 @app.route('/')
 
@@ -55,7 +55,18 @@ def registro() -> 'html':
 @app.route('/catalogo')
 
 def catalogo() -> 'html':
-  return render_template('invitado/catalogo.html',titulo ='Nuestros Productos')
+
+  data=verproductos()
+  return render_template('invitado/catalogo.html',titulo ='Nuestros Productos',data=data)
+
+@app.route('/detalle',methods=['GET'])
+
+def catalogo_detalle() -> 'html':
+
+  id = request.args.get('id')
+  data=verproductos_detalle(id)
+
+  return render_template('invitado/dcatalogo.html',titulo =data[0][1],data=data)
 
 
 #####RUTAS CON SESION

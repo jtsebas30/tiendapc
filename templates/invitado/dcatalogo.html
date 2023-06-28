@@ -1,0 +1,46 @@
+{% extends './base.html' %}
+
+{% block body %}
+
+{% for datos in data %}
+ <!-- Header -->
+        <header class="ex-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 offset-xl-1">
+                        <h1 class="text-center">{{datos[1]}}</h1>
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </header> <!-- end of ex-header -->
+        <!-- end of header -->
+
+
+
+<div class="container  mt-4" >
+
+
+    <div class="row">
+    <div class="col">
+      <img src=".././static/assets/{{datos[6]}}" class="img-fluid" alt="{{datos[6]}}">
+    </div>
+    <div class="col">
+
+        <b><h3>Caracteristicas </h3></b>
+      <ul class="mt-3">
+            {{datos[4] | safe}}
+
+      </ul>
+
+        <a class="btn-solid-reg mb-5" href="/login">Comprar</a>
+
+
+    </div>
+  </div>
+
+
+
+</div>
+{% endfor %}
+
+{% endblock %}
