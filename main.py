@@ -1,6 +1,7 @@
 
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from bdd import *
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'tid@205'
@@ -68,9 +69,6 @@ def catalogo_detalle() -> 'html':
 
   return render_template('invitado/dcatalogo.html',titulo =data[0][1],data=data)
 
-
-#####RUTAS CON SESION
-
 @app.route('/newuser',methods=['POST'])
 def nuevouser()->'html':
   cedula = request.form.get('cedula')
@@ -89,11 +87,103 @@ def nuevouser()->'html':
   else:
     return redirect(url_for('index'))
 
+#####RUTAS CON SESION
+
+@app.route('/ingreso',methods=['POST'])
+def ingresou()->'html':
+  correo = request.form.get('correo')
+  clave = request.form.get('contrasenia')
+
+  data=validar_user(correo,clave)
+  #print(data)
+
+  if data !=[]:
+    # Variables de Sesion
+    session['nombres']=data[0][1]+" "+data[0][2]
+    session['cedula']=data[0][0]
+    session['correo']=correo
+    return redirect(url_for('index_cliente'))
+  else:
+    flash('Error: Verifique que el correo y la contraseña se han correctos', 'error')
+    return redirect(url_for('login'))
+
+@app.route('/cinicio')
+
+def index_cliente() -> 'html':
+
+  if 'cedula' in session:
+
+    return render_template('cliente/index.html',titulo ='Bienvenido '+session['nombres'])
+
+  else :
+
+    return redirect(url_for('index'))
+
+@app.route('/ccatalogo')
+def catalogo_cliente()->'html':
+  if 'cedula' in session:
+
+    data = verproductos()
+    #print(data)
+
+    return render_template('cliente/catalogo.html', titulo='Catalogo de Productos',data=data)
+
+  else:
+
+    return redirect(url_for('index'))
+
+
+@app.route('/ccatalogod',methods=['GET'])
+def detallecatalogo()->'html':
+  if 'cedula' in session:
+    id=request.args.get('id')
+    data = verproductos_detalle(id)
+
+    return render_template('cliente/detallecatalogo.html',data=data,titulo=data[0][1])
+
+  else:
+
+    return redirect(url_for('index'))
+
+@app.route('/cpedidos')
+def pedidos()->'html':
+  if 'cedula' in session:
+
+    cedula=str(session['cedula'])
+    data=carrito_cliente(cedula)
+
+    return render_template('cliente/pedidos.html',titulo='Carrito Compras',data=data)
+
+  else:
+
+    return redirect(url_for('index'))
+
+
+@app.route('/ccarrito',methods=['POST'])
+def agregarcesta()->'html':
+  if 'cedula' in session:
+    id = request.form.get('id')
+    precio = request.form.get('precio')
+    fecha_actual = datetime.now().date()
+    res=agregarcestabd(id,str(session['cedula']),fecha_actual,1,precio)
+
+    if res:
+      return redirect(url_for('pedidos'))
+    else:
+      return redirect(url_for('catalogo_cliente'))
+
+  else:
+
+    return redirect(url_for('index'))
 
 
 
 
+@app.route('/logout')
+def cerrarsesion()->'html':
+  session.clear()
 
+  return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)

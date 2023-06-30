@@ -1,0 +1,50 @@
+{% extends './basec.html' %}
+
+{% block body %}
+
+
+<!-- Header -->
+        <header class="ex-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 offset-xl-1">
+                        <h1 class="text-center">Carrito de Compras </h1>
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </header> <!-- end of ex-header -->
+        <!-- end of header -->
+
+<div class="container mt-3">
+
+  <table class="table">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Cod P</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Fecha de Añadido</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">SubTotal</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for datos in data %}
+
+    <tr>
+      <th scope="row">{{datos[0]}}</th>
+      <td>{{datos[1]}}</td>
+      <td>{{datos[2]}}</td>
+      <td>{{datos[3]}}</td>
+        <td>{{datos[4]}}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+
+</div>
+
+{% endblock %}
