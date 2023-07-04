@@ -6,6 +6,7 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = 'tid@205'
 
+
 @app.route('/pr')
 
 def prueba() -> 'html':
@@ -113,7 +114,9 @@ def index_cliente() -> 'html':
 
   if 'cedula' in session:
 
-    return render_template('cliente/index.html',titulo ='Bienvenido '+session['nombres'])
+
+
+    return render_template('cliente/index.html',titulo ='Bienvenido '+session['nombres'],nom=session['nombres'])
 
   else :
 
@@ -152,7 +155,14 @@ def pedidos()->'html':
     cedula=str(session['cedula'])
     data=carrito_cliente(cedula)
 
-    return render_template('cliente/pedidos.html',titulo='Carrito Compras',data=data)
+    return render_template(
+      'cliente/pedidos.html',
+      titulo='Carrito Compras',
+      data=data,
+      nom=str(session['nombres']),
+      ced=str(session['cedula']),
+      cor=str(session['correo'])
+    )
 
   else:
 

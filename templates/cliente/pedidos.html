@@ -16,35 +16,152 @@
         <!-- end of header -->
 
 <div class="container mt-3">
+    <br>
+    <center><h3> Datos Informativos </h3></center>
+    <h6><i class="bi bi-person-check-fill"> Cliente : </i>  {{nom}} </h6>
+    <h6><i class="bi bi-person-badge-fill"> Cédula de Identidad :</i>  {{ced}}</h6>
+    <h6><i class="bi bi-envelope-at-fill"> Correo : </i>  {{cor}}</h6>
 
+    <hr>
   <table class="table">
   <thead class="table-dark">
     <tr>
-      <th scope="col">Cod P</th>
-      <th scope="col">Descripción</th>
-      <th scope="col">Fecha de Añadido</th>
-      <th scope="col">Cantidad</th>
-      <th scope="col">SubTotal</th>
+      <th scope="col" class="text-center align-middle">Cod Producto</th>
+        <th scope="col" class="text-center align-middle">Cantidad</th>
+      <th scope="col" class="text-center align-middle">Descripción</th>
+      <th scope="col" class="text-center align-middle">Fecha de Añadido</th>
+
+      <th scope="col" class="text-center align-middle">SubTotal</th>
+        <th scope="col" class="text-center align-middle">Acciones</th>
     </tr>
   </thead>
   <tbody>
   {% for datos in data %}
 
     <tr>
-      <th scope="row">{{datos[0]}}</th>
-      <td>{{datos[1]}}</td>
-      <td>{{datos[2]}}</td>
-      <td>{{datos[3]}}</td>
-        <td>{{datos[4]}}</td>
+      <th scope="row"><i class="bi bi-x-diamond-fill"></i> CPE00{{datos[0]}}</th>
+        <td class="text-center align-middle">{{datos[3]}}</td>
+      <td class="text-center align-middle">{{datos[1]}}</td>
+      <td class="text-center align-middle">{{datos[2]}}</td>
+
+        <td class="text-center align-middle"><b>{{datos[4]}}</b></td>
+
+        <td>
+            <a class="btn btn-success" href="#" role="button"><i class="bi bi-cash-coin"></i></a>
+            <a class="btn btn-danger" href="#" role="button"><i class="bi bi-trash3"></i> </a>
+
+        </td>
+
     </tr>
   {% endfor %}
   </tbody>
 </table>
 
+    <div class="row">
+        <div class="col">
 
+        </div>
+        <div class="col">
+            <br>
+            <h3 class="text-right"><i class="bi bi-currency-dollar"></i> Subtotal : </h3>
 
+            <h3 class="text-right"> <i class="bi bi-currency-dollar"></i> Descuentos : </h3>
+            <h3><i class="bi bi-currency-dollar"></i> Total :</h3>
+            <hr>
 
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="bi bi-credit-card-2-front-fill"></i>  Pagar toda la Orden
+            </button>
+        </div>
+    </div>
+    <br>
+    <p><i class="bi bi-exclamation-octagon-fill"></i> Esta tabla corresponde a los productos que se encuentran en la cesta, la disponibilidad de cada
+        producto puede variar. <br> <i class="bi bi-exclamation-octagon-fill"></i> Añadir los productos a la cesta no garantiza la separación del producto.</p>
 
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Datos de Tarjeta de Crédito</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <center>
+          <img src=".././static/assets/tarjeta.png" class="img-fluid" alt="..." width="10%">
+           <img src=".././static/assets/visa.png" class="img-fluid" alt="..." width="10%">
+        </center>
+
+        <form action="/tarjeta" method="post">
+
+          <div class="form-floating mb-3">
+              <input type="text" class="form-control" name=tarjeta id="floatingInput1" maxlength="16" placeholder="XXXXXXXXXXXXXX" required>
+              <label for="floatingInput1"># de Tarjeta</label>
+          </div>
+
+          <div class="row g-2">
+          <div class="col-md">
+              <div class="form-floating">
+              <select class="form-select" name="mes" id="floatingSelectGrid1" required>
+                <option selected>Seleccione: </option>
+                <option value="1">01</option>
+                <option value="2">02</option>
+                  <option value="3">03</option>
+                  <option value="4">04</option>
+                  <option value="5">05</option>
+                  <option value="6">06</option>
+                  <option value="7">07</option>
+                  <option value="8">08</option>
+                  <option value="9">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+
+              </select>
+              <label for="floatingSelectGrid">Mes : </label>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-floating">
+              <select class="form-select" name="anio" id="floatingSelectGrid" required>
+                <option selected>Seleccione</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                  <option value="2028">2028</option>
+                  <option value="2029">2029</option>
+                  <option value="2030">2030</option>
+              </select>
+              <label for="floatingSelectGrid">Año</label>
+            </div>
+          </div>
+        </div>
+
+           <div class="form-floating mt-2">
+              <input type="password" class="form-control" name=cv id="floatingPassword3" maxlength="3" placeholder="XXX"required>
+              <label for="floatingPassword3">CV: </label>
+          </div>
+
+            <button class="btn btn-success mt-3" type="submit"><i class="bi bi-credit-card-2-front-fill"></i> Finalizar Pago  </button>
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square-fill"></i> Cancelar Pago</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<br>
+<br>
 
 {% endblock %}
