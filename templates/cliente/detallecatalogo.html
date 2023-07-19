@@ -40,9 +40,81 @@
             <input type="hidden" value="{{datos[0]}}" name="id">
             <input type="hidden" value="{{datos[5]}}" name="precio">
 
-            <button type="submit" class="btn-solid-reg mb-5" >Comprar</button>
+            <button type="submit" class="btn-solid-reg mb-5" ><i class="bi bi-bag-check-fill"></i> Comprar</button>
 
         </form>
+
+        <p style="text-align:justify">"¡No estás seguro? Solicita una prueba gratuita antes de comprar nuestro producto y despeja todas tus dudas.¡Comprueba su calidad y funcionalidad antes de tomar una decisión!" </p>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn-solid-reg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <i class="bi bi-patch-question"></i> Solicitar una Prueba
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Solicitud para Pruebas de Equipos </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p> Estimad@ ,<b>{{nom}}</b> Por favor verifique que la información personal proporcionada sea la correcta. </p>
+
+                  <form action="/solicitud" method="POST">
+
+                      <center> <h3> Información Personal </h3></center>
+
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control" name="nombre" id="nombre" placeholder="name@example.com" value="{{nom}}" readonly>
+                          <label for="nombre">Cliente : </label>
+                      </div>
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control" name="cedula" id="cedula" placeholder="Password" value="{{ced}}" readonly>
+                          <label for="cedula">Cedula : </label>
+                      </div>
+
+                       <div class="form-floating mb-3">
+                          <input type="email" class="form-control"  name="correo" id="correo" placeholder="Password" value="{{cor}}" readonly>
+                          <label for="correo">Correo Electronico : </label>
+                      </div>
+
+                      <center> <h3> Datos del Producto </h3></center>
+
+                      <div class="form-floating mb-3">
+                          <input type="email" class="form-control" name="producto" id="producto" placeholder="Password" value="{{titulo}}" readonly>
+                          <label for="correo">Producto Seleccionado : </label>
+                      </div>
+
+                      <center> <h3> Aceptación de Terminos </h3></center>
+
+                       <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" role="switch" id="termino1" required>
+                          <label class="form-check-label" for="termino1">Está de acuerdo que la solicitud generada se ha revisada por un asesor comercial en donde evaluaran si cumple con las condiciones establecidas para las pruebas de equipos. </label>
+                       </div>
+
+                         <center> <h4> Importante  </h4></center>
+
+                      <p><i class="bi bi-exclamation-octagon-fill"></i> El estado de su solicitud la puede revisar en la sección de  <a href="/cprestamos">Prestamos</a>.
+                          <br>
+                          <i class="bi bi-exclamation-octagon-fill"></i> La Aprobación de esta puede durar hasta 48 Horas.
+                          <br>
+                          <i class="bi bi-exclamation-octagon-fill"></i> Recuerde que una vez aprobada el asesor se comunicara con usted y coordinara la entrega de los equipos hasta un máximo de 24 Horas.
+
+                      </p>
+
+
+                      <button type="submit" class="btn btn-success">Enviar solicitud</button>
+
+                  </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
 
 
 

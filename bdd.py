@@ -11,7 +11,7 @@ def nuevousuario(cedula,nombre,apellido,provincia,domicilio,correo,contrasenia):
         cursor = db.cursor()
         cursor.execute(sql, valores)
         db.commit()
-        db.close()
+
         return True
     except (Exception, psycopg2.DatabaseError) as error:
         print("Error:", error)
@@ -73,7 +73,7 @@ def agregarcestabd(idproducto,cedula,fecha,cantidad,precio):
         cursor = db.cursor()
         cursor.execute(sql, valores)
         db.commit()
-        db.close()
+
         return True
     except (Exception, psycopg2.DatabaseError) as error:
         print("Error:", error)
@@ -81,12 +81,106 @@ def agregarcestabd(idproducto,cedula,fecha,cantidad,precio):
 
 def carrito_cliente(cedula):
     try:
-        sql = "SELECT PRODUCTOS.IDP,PRODUCTOS.NOMBRE,CARRITO.FECHA,CARRITO.CANTIDAD,CARRITO.PRECIOTOTAL FROM PRODUCTOS,CARRITO,CLIENTE WHERE PRODUCTOS.IDP=CARRITO.IDP AND CLIENTE.CEDULA=CARRITO.CEDULA AND CLIENTE.CEDULA=%s"
+        sql = "SELECT PRODUCTOS.IDP,PRODUCTOS.NOMBRE,CARRITO.FECHA,CARRITO.CANTIDAD,CARRITO.PRECIOTOTAL,CARRITO.IDC FROM PRODUCTOS,CARRITO,CLIENTE WHERE PRODUCTOS.IDP=CARRITO.IDP AND CLIENTE.CEDULA=CARRITO.CEDULA AND CLIENTE.CEDULA=%s"
         valores = (cedula,)
+        #print(sql % valores)
+        with db.cursor() as cursor:
+            cursor.execute(sql, valores)
+            data = cursor.fetchall()
+
+        return data
+    except (Exception,psycopg2.DatabaseError) as error:
+        db.close()
+        print("Error:",error)
+        return None
+
+
+def pedido_exitoso(cedula,fecha,total):
+    try:
+        sql = "INSERT INTO factura (cedula,fecha,total) values " \
+              "(%s,%s,%s)"
+        valores = (cedula,fecha,total)
+        #print(sql % valores)
         cursor = db.cursor()
-        cursor.execute(sql,valores)
-        data = cursor.fetchall()
-        cursor.close()
+        cursor.execute(sql, valores)
+        db.commit()
+
+
+        return True
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("Error:", error)
+        return False
+
+def eliminar_carrito(cedula):
+    try:
+        sql = "DELETE FROM CARRITO WHERE CEDULA = %s"
+        valores = (cedula,)
+        #print(sql % valores)
+        cursor = db.cursor()
+        cursor.execute(sql, valores)
+        db.commit()
+
+        return True
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("Error:", error)
+        return False
+
+
+def eliminar_producto(idc):
+    try:
+        sql = "DELETE FROM CARRITO WHERE IDC = %s"
+        valores = (idc,)
+        print(sql % valores)
+        cursor = db.cursor()
+        cursor.execute(sql, valores)
+        db.commit()
+
+        return True
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("Error:", error)
+        return False
+
+
+def cliente_comprobantes(cedula):
+    try:
+        sql = "SELECT * FROM FACTURA WHERE CEDULA=%s"
+        valores = (cedula,)
+        #print(sql % valores)
+        with db.cursor() as cursor:
+            cursor.execute(sql, valores)
+            data = cursor.fetchall()
+
+        return data
+    except (Exception,psycopg2.DatabaseError) as error:
+        db.close()
+        print("Error:",error)
+        return None
+
+def solicitud_ingreso(cliente,cedula,correo,producto,fecha):
+    try:
+        sql = "INSERT INTO SOLICITUD_PRESTAMO (cliente,cedula,correo,producto,fecha,estado,mensaje) values " \
+              "(%s,%s,%s,%s,%s,0,'Trámite Iniciado')"
+        valores = (cliente,cedula,correo,producto,fecha)
+        #print(sql % valores)
+        cursor = db.cursor()
+        cursor.execute(sql, valores)
+        db.commit()
+
+
+        return True
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("Error:", error)
+        return False
+
+
+def cliente_solicitudes(cedula):
+    try:
+        sql = "SELECT * FROM SOLICITUD_PRESTAMO WHERE CEDULA=%s"
+        valores = (cedula,)
+        #print(sql % valores)
+        with db.cursor() as cursor:
+            cursor.execute(sql, valores)
+            data = cursor.fetchall()
 
         return data
     except (Exception,psycopg2.DatabaseError) as error:

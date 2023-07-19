@@ -142,7 +142,37 @@ def detallecatalogo()->'html':
     id=request.args.get('id')
     data = verproductos_detalle(id)
 
-    return render_template('cliente/detallecatalogo.html',data=data,titulo=data[0][1])
+
+    return render_template(
+      'cliente/detallecatalogo.html',
+      data=data,
+      titulo=data[0][1],
+      nom=session['nombres'],
+      cor=session['correo'],
+      ced=session['cedula']
+    )
+
+  else:
+
+    return redirect(url_for('index'))
+
+@app.route('/solicitud',methods=['POST'])
+def agregasolicitud()->'html':
+  if 'cedula' in session:
+    nombre = request.form.get('nombre')
+    cedula = request.form.get('cedula')
+    correo = request.form.get('correo')
+    producto = request.form.get('producto')
+    fecha_actual = datetime.now().date()
+
+    res=solicitud_ingreso(nombre,cedula,correo,producto,fecha_actual)
+
+    if res:
+      flash("Solicitud Ingresada Correctamente")
+      return redirect(url_for('prestamos'))
+    else:
+      flash("La Solicitud no fue Ingresada, por favor intente nuevamente.")
+      return redirect(url_for('prestamos'))
 
   else:
 
@@ -154,6 +184,12 @@ def pedidos()->'html':
 
     cedula=str(session['cedula'])
     data=carrito_cliente(cedula)
+    print(data)
+    suma_total = 0
+
+    for tupla in data:
+      valor_decimal = tupla[4]
+      suma_total += float(valor_decimal)
 
     return render_template(
       'cliente/pedidos.html',
@@ -161,7 +197,8 @@ def pedidos()->'html':
       data=data,
       nom=str(session['nombres']),
       ced=str(session['cedula']),
-      cor=str(session['correo'])
+      cor=str(session['correo']),
+      sum=suma_total
     )
 
   else:
@@ -186,7 +223,82 @@ def agregarcesta()->'html':
 
     return redirect(url_for('index'))
 
+@app.route('/tarjeta',methods=['POST'])
+def compra_finalizada()->'html':
+  if 'cedula' in session:
+   total = request.form.get('total')
+   cedula=session['cedula']
+   fecha_actual = datetime.now().date()
 
+   res=pedido_exitoso(cedula,fecha_actual,total)
+   rese= eliminar_carrito(cedula)
+
+   if res and rese :
+     flash('Pedido realizado con Exito, dirigite a Comprobantes para visualizar el documento.')
+     return redirect(url_for('pedidos'))
+   else:
+      flash('Ocurrio un Error al realizar el pedido,intentalo más adelante.')
+      return redirect(url_for('pedidos'))
+
+  else:
+   return redirect(url_for('index'))
+
+
+@app.route('/eliminar',methods=['GET'])
+def eliminar_producto_carrito()->'html':
+  if 'cedula' in session:
+   id=request.args.get('id')
+   print(id)
+
+   res=eliminar_producto(id)
+
+   if res :
+     flash('El producto ha sido eliminado de su carrito.')
+     return redirect(url_for('pedidos'))
+   else:
+      flash('Ocurrio un Error no se puede eliminar el producto de su carrito.')
+      return redirect(url_for('pedidos'))
+
+  else:
+   return redirect(url_for('index'))
+
+
+@app.route('/ccomprobantes')
+def comprobantes()->'html':
+  if 'cedula' in session:
+
+    cedula=str(session['cedula'])
+    data=cliente_comprobantes(cedula)
+
+
+    return render_template(
+      'cliente/comprobantes.html',
+      titulo='Comprobantes de Venta',
+      data=data,
+      nom=str(session['nombres']),
+      ced=str(session['cedula']),
+      cor=str(session['correo']),
+    )
+
+  else:
+
+    return redirect(url_for('index'))
+
+@app.route('/cprestamos')
+def prestamos()->'html':
+  if 'cedula' in session:
+
+    data=cliente_solicitudes(session['cedula'])
+
+    return render_template(
+      'cliente/prestamos.html',
+      titulo='Prestamos de Equipos',
+      data=data
+    )
+
+  else:
+
+    return redirect(url_for('index'))
 
 
 @app.route('/logout')

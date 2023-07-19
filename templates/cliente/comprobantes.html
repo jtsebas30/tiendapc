@@ -1,0 +1,62 @@
+{% extends './basec.html' %}
+
+{% block body %}
+
+
+<!-- Header -->
+        <header class="ex-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 offset-xl-1">
+                        <h1 class="text-center">Comprobantes de Compra </h1>
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </header> <!-- end of ex-header -->
+        <!-- end of header -->
+
+<div class="container mt-3">
+
+  <br>
+    <center><h3> Datos Informativos </h3></center>
+    <h6><i class="bi bi-person-check-fill"> Cliente : </i>  {{nom}} </h6>
+    <h6><i class="bi bi-person-badge-fill"> Cédula de Identidad :</i>  {{ced}}</h6>
+    <h6><i class="bi bi-envelope-at-fill"> Correo : </i>  {{cor}}</h6>
+
+
+  <table class="table">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col" class="text-center align-middle"># Documento</th>
+        <th scope="col" class="text-center align-middle">Remitido A </th>
+      <th scope="col" class="text-center align-middle">Fecha de Compra</th>
+      <th scope="col" class="text-center align-middle">Total Facturado</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% if data %}
+      {% for datos in data %}
+
+        <tr>
+          <th scope="row"><i class="bi bi-file-earmark-text-fill"></i> FAC00{{datos[0]}}</th>
+            <td class="text-center align-middle">{{datos[1]}}</td>
+          <td class="text-center align-middle">{{datos[2]}}</td>
+          <td class="text-center align-middle">{{datos[3]}}</td>
+
+        </tr>
+      {% endfor %}
+  {% else %}
+    <tr>
+    <td colspan="6" class="text-center">No existen Facturas.</td>
+  </tr>
+{% endif %}
+
+  </tbody>
+</table>
+
+
+</div>
+
+
+{% endblock %}
