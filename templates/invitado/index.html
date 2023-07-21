@@ -28,4 +28,25 @@
         </header> <!-- end of header -->
         <!-- end of header -->
 
+
+<!-- Botón flotante del chatbot -->
+    <div id="chatbot-toggle" class="shadow">Chat</div>
+
+    <!-- Contenedor del chatbot -->
+    <div id="chatbot-container">
+        <div id="chatbot-close">X</div> <!-- Botón de cerrar -->
+        <div class="chat-content">
+            <!-- Mensajes del chatbot se agregarán aquí -->
+            <div class="chat-message bot-message">¡Hola! ¿En qué puedo ayudarte?</div>
+        </div>
+
+        <div class="chat-input">
+            <input id="user-input" type="text" class="form-control" placeholder="Escribe tu mensaje...">
+            <button id="send-button" class="btn btn-primary">Enviar</button>
+        </div>
+    </div>
+
+
+
+
 {% endblock %}
