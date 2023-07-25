@@ -2,9 +2,14 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from bdd import *
 from datetime import datetime
+import aiml
 
 app = Flask(__name__)
 app.secret_key = 'tid@205'
+
+# Crea el objeto Kernel de AIML y carga los archivos AIML
+kernel = aiml.Kernel()
+kernel.learn("bot.aiml")
 
 
 @app.route('/pr')
@@ -16,6 +21,12 @@ def prueba() -> 'html':
 
 def index() -> 'html':
   return render_template('invitado/index.html',titulo ='Inicio')
+
+@app.route("/get_response", methods=["POST"])
+def get_response():
+    user_message = request.form["user_message"]
+    response = kernel.respond(user_message)
+    return str(response)
 
 @app.route('/login')
 
@@ -80,13 +91,43 @@ def nuevouser()->'html':
   correo = request.form.get('correo')
   clave = request.form.get('contrasenia')
 
-  res=nuevousuario(cedula, nombre, apellido, provincia, domicilio, correo, clave)
-  #print(res)
+
+
+  v_cedula=validar_userxcedula(cedula)
+  v_correo=validar_userxcedula(correo)
+
+
+  if v_cedula !=[]:
+
+    flash('<div class="alert alert-danger d-flex align-items-center" role="alert">'
+          '<div>Error ya existe un usuario registrado con la cedula : ' + cedula +
+          '</div>'
+          '</div>')
+    return redirect(url_for('registro'))
+  else :
+    bced = True
+
+  if v_correo !=[]:
+    flash('<div class="alert alert-danger d-flex align-items-center" role="alert">'
+          '<div> <i class="bi bi-exclamation-diamond-fill"></i> Error ya existe un usuario registrado con el correo: ' + correo +
+          '</div>'
+          '</div>')
+    return redirect(url_for('registro'))
+  else:
+    bcor = True
+
+
+  if bced and bcor:
+    res = nuevousuario(cedula, nombre, apellido, provincia, domicilio, correo, clave)
 
   if res :
-    return redirect(url_for('login'))
+    flash('<div class="alert alert-success d-flex align-items-center" role="alert">'
+          '<div> Usuario registrado correctamente, clic para <a href="/login"> Iniciar Sesion </a>'
+          '</div>'
+          '</div>')
+    return redirect(url_for('registro'))
   else:
-    return redirect(url_for('index'))
+    return redirect(url_for('registro'))
 
 #####RUTAS CON SESION
 

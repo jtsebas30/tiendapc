@@ -24,10 +24,22 @@
                         <div class="text-box mt-5 mb-5">
                             <p class="mb-4">Estimado Cliente, por favor complete todos los campos solicitados para crear su cuenta en nuestra tienda. Si ya dispone de una pulse en  <a class="blue" href="/login">Iniciar Sesion.</a></p>
 
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                              {% if messages %}
+
+                                   {% for category, message in messages %}
+
+                                        {{ message| safe }}
+
+                                    {% endfor %}
+
+                              {% endif %}
+                            {% endwith %}
+
                             <!-- Sign Up Form -->
                             <form action="/newuser" method="post">
                                 <div class="mb-4 form-floating">
-                                    <input type="text" class="form-control" id="cedula" name="cedula" onkeypress="return validarNumeros(event, 'cedula')" placeholder="XXXXXXXXX" maxlength="10" required>
+                                    <input type="text" class="form-control" id="cedula" name="cedula" onkeypress="return validarNumeros(event, 'cedula')" placeholder="XXXXXXXXX" minlength="10" maxlength="10" required>
                                     <label for="cedula">Cédula de Identidad</label>
                                 </div>
 

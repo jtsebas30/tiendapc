@@ -1,0 +1,29 @@
+<aiml version="1.0.1" encoding="UTF-8">
+    <category>
+        <pattern>BIENVENIDA</pattern>
+        <template>Bienvenido/a a CompuEC chat. ¿En qué puedo ayudarte hoy?</template>
+    </category>
+    <category>
+        <pattern>HOLA</pattern>
+        <template>¡Hola, Bienvenido a CompuEc! ¿En que puedo ayudarte?</template>
+    </category>
+    <category>
+        <pattern>INFORMACION DE PRODUCTOS</pattern>
+        <template>Claro, con mucho gusto nuestra tienda distribuye una amplia gama de marcas de computadores a precios sumamente accesibles. Te invitamos a visitar nuestra sección de <a href="/catalogo"> Cátalogo.</a></template>
+    </category>
+    <category>
+        <pattern>PROBLEMA DE COMPRAS</pattern>
+        <template> Nos apena que tengas un incoveniente en tu compra, puedes obtener ayuda en nuestra sección de información.</template>
+    </category>
+
+     <category>
+        <pattern>TENGO UN PROBLEMA CON MIS COMPRAS</pattern>
+        <template><srai>PROBLEMA DE COMPRAS</srai></template>
+    </category>
+
+    <category>
+        <pattern>ADIOS</pattern>
+        <template>¡Hasta luego! Que tengas un buen día.</template>
+    </category>
+
+</aiml>

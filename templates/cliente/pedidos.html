@@ -118,7 +118,7 @@
         <form action="/tarjeta" method="post" onsubmit="return validarSelectMes()">
 
           <div class="form-floating mb-3">
-              <input type="text" class="form-control" name="tarjeta" id="tarjeta" onkeypress="validarTarjeta(event)" maxlength="16" placeholder="XXXXXXXXXXXXXX" required>
+              <input type="text" class="form-control" name="tarjeta" id="tarjeta" onkeypress="validarTarjeta(event)" minlength="16" maxlength="16" placeholder="XXXXXXXXXXXXXX" required>
               <label for="tarjeta"># de Tarjeta</label>
           </div>
 
@@ -163,7 +163,7 @@
         </div>
 
            <div class="form-floating mt-2">
-              <input type="password" class="form-control" name=cv id="floatingPassword3" onkeypress="validarTarjetaCVC(event)" maxlength="3" placeholder="XXX" required>
+              <input type="password" class="form-control" name=cv id="floatingPassword3" onkeypress="validarTarjetaCVC(event)" minlength="3" maxlength="4" placeholder="XXX" required>
               <label for="floatingPassword3">CVC: </label>
           </div>
 

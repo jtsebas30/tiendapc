@@ -1,52 +1,59 @@
- #chatbot-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 60px;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
+/* Estilos para la bola flotante */
+.floating-button {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
 
-        #chatbot-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
-            height: 400px;
-            background-color: #f7f7f7;
-            border-radius: 10px;
-            padding: 10px;
-            overflow-y: auto;
-            display: none;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            z-index: 9999; /* Asegura que el chatbot esté por encima del contenido de la página */
-        }
+/* Estilos para el chat */
+.chat-container {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #ffffff; /* Color de fondo del chat */
+    display: none;
+}
+.chat-header {
+    background-color: #007BFF;
+    border-radius:10px;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        #chatbot-container.expanded {
-            height: 400px;
-        }
+.close-button {
+    cursor: pointer;
+}
 
-        #chatbot-close {
-            text-align: right;
-            cursor: pointer;
-        }
+.chat-body {
+    height: 200px;
+    overflow-y: scroll;
+    padding: 10px;
+    /* Agrega un color de fondo al chat-body */
+    background-color: #f0f0f0; /* Puedes ajustar el color según tus preferencias */
+}
 
-        /* Estilo para el cuadro de entrada de mensaje */
-        .chat-input {
-            display: flex;
-            margin-top: 10px;
-        }
+.chat-footer {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
 
-        /* Estilo para el botón de enviar */
-        .chat-input button {
-            margin-left: 5px;
-        }
+.chat-footer input[type="text"] {
+    flex: 1;
+    margin-right: 10px;
+}

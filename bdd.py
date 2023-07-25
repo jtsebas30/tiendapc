@@ -48,6 +48,39 @@ def verproductos_detalle(id):
         print("Error:",error)
         return None
 
+def validar_correo(correo):
+    try:
+        sql = "SELECT * FROM CLIENTE WHERE CORREO=%s"
+        valores = (correo,)
+        print(sql%valores)
+        cursor = db.cursor()
+        cursor.execute(sql, valores)
+        data = cursor.fetchall()
+        cursor.close()
+
+        return data
+    except (Exception, psycopg2.DatabaseError) as error:
+        db.close()
+        print("Error:", error)
+        return None
+
+def validar_userxcedula(cedula):
+    try:
+        sql = "SELECT * FROM CLIENTE WHERE CEDULA=%s"
+        valores = (cedula,)
+        print(sql%valores)
+        cursor = db.cursor()
+        cursor.execute(sql, valores)
+        data = cursor.fetchall()
+        cursor.close()
+
+        return data
+    except (Exception, psycopg2.DatabaseError) as error:
+        db.close()
+        print("Error:", error)
+        return None
+
+
 
 def validar_user(correo,contrasenia):
     try:

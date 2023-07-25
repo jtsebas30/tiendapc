@@ -1,39 +1,58 @@
-  $(document).ready(function () {
-            // Mostrar u ocultar el chatbot al hacer clic en el botón flotante
-            $("#chatbot-toggle").click(function () {
-                $("#chatbot-container").toggle();
-            });
+// Variables para la bola flotante y el chat
+var floatingButton = document.getElementById("floatingButton");
+var chatContainer = document.getElementById("chatContainer");
+var closeButton = document.getElementById("closeButton");
+var chatBody = document.getElementById("chatBody");
+var userInput = document.getElementById("userInput");
 
-            // Cerrar el chatbot al hacer clic en el botón "X"
-            $("#chatbot-close").click(function () {
-                $("#chatbot-container").hide();
-            });
+// Función para mostrar/ocultar el chat al hacer clic en la bola flotante
+floatingButton.addEventListener("click", function () {
+    chatContainer.style.display = "block";
+    // Mostrar mensaje de bienvenida
+});
 
-             // Escucha el evento click del botón "Enviar"
-    document.getElementById("send-button").addEventListener("click", function () {
-        // Obtiene el mensaje ingresado por el usuario
-        const userInput = document.getElementById("user-input").value;
+closeButton.addEventListener("click", function () {
+    chatContainer.style.display = "none";
+});
 
-        // Añade el mensaje del usuario al chat
-        appendUserMessage(userInput);
+// Función para enviar mensajes
+function sendMessage() {
+    var userMessage = userInput.value;
+    appendMessage("Tú", userMessage);
 
-        // Responde con un mensaje estático del chatbot
-        setTimeout(function () {
-            const response = "Gracias por tu mensaje: " + userInput;
-            appendBotMessage(response);
-        }, 1000);
+    // Enviar el mensaje al servidor mediante una solicitud POST
+    fetch("/get_response", {
+        method: "POST",
+        body: new URLSearchParams({"user_message": userMessage}),
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+    })
+    .then(response => response.text())
+    .then(data => {
+        appendMessage("Chatbot", data);
     });
 
-    // Función para añadir el mensaje del usuario al chat
-    function appendUserMessage(message) {
-        const userMessage = '<div class="chat-message user-message">' + message + '</div>';
-        document.querySelector(".chat-content").insertAdjacentHTML("beforeend", userMessage);
-        document.getElementById("user-input").value = "";
+    userInput.value = "";
+}
+
+// Función para agregar mensajes al chat
+function appendMessage(sender, message) {
+    var newMessage = document.createElement("div");
+    newMessage.className = "message";
+
+    if (message.trim().toUpperCase() === "BIENVENIDA") {
+        // Mostrar solo el contenido del mensaje de bienvenida
+        newMessage.textContent = "¡Hola, Bienvenido a CompuEc! ¿En que puedo ayudarte?";
+    } else {
+        // Mostrar mensaje normal con remitente
+        newMessage.textContent = sender + ": " + message;
     }
 
-    // Función para añadir el mensaje del chatbot al chat
-    function appendBotMessage(message) {
-        const botMessage = '<div class="chat-message bot-message">' + message + '</div>';
-        document.querySelector(".chat-content").insertAdjacentHTML("beforeend", botMessage);
-    }
-        });
+    chatBody.appendChild(newMessage);
+}
+
+// Agregar mensaje de bienvenida al cargar el chat
+window.addEventListener("load", function () {
+    appendMessage("Chatbot", "BIENVENIDA");
+});
