@@ -90,7 +90,7 @@
             <hr>
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" {{btn}} >
               <i class="bi bi-credit-card-2-front-fill"></i>  Pagar toda la Orden
             </button>
         </div>
@@ -115,7 +115,7 @@
            <img src=".././static/assets/visa.png" class="img-fluid" alt="..." width="10%">
         </center>
 
-        <form action="/tarjeta" method="post" onsubmit="return validarSelectMes()">
+        <form action="/tarjeta" method="post" onsubmit="return validarFormulario()">
 
           <div class="form-floating mb-3">
               <input type="text" class="form-control" name="tarjeta" id="tarjeta" onkeypress="validarTarjeta(event)" minlength="16" maxlength="16" placeholder="XXXXXXXXXXXXXX" required>
@@ -168,7 +168,7 @@
           </div>
 
             <input type="hidden" name="total" value="{{sum}}">
-
+            <input type="hidden" name="errores" id="errores">
             <button class="btn btn-success mt-3" type="submit"><i class="bi bi-credit-card-2-front-fill" ></i> Finalizar Pago  </button>
 
         </form>

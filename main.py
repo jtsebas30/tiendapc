@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 from bdd import *
 from datetime import datetime
 import aiml
+from bdmetricas import *
+import time
 
 app = Flask(__name__)
 app.secret_key = 'tid@205'
@@ -144,6 +146,19 @@ def ingresou()->'html':
     session['nombres']=data[0][1]+" "+data[0][2]
     session['cedula']=data[0][0]
     session['correo']=correo
+
+    #Cuando se valida el ingreso se inicializan las variables de metricas para cada categoria
+
+    # Enceramiento de variables para calculo de metricas
+    # ENTENDIBILIDAD
+    session['e_nayudas'] = 0
+    session['e_pcerradas'] = 0
+    session['e_nerrores'] = 0
+    session['e_tiempop'] = 0
+    session['init_tiempo']=time.time()
+
+    ###########################
+
     return redirect(url_for('index_cliente'))
   else:
     flash('Error: Verifique que el correo y la contraseña se han correctos', 'error')
@@ -155,11 +170,24 @@ def index_cliente() -> 'html':
 
   if 'cedula' in session:
 
-
-
     return render_template('cliente/index.html',titulo ='Bienvenido '+session['nombres'],nom=session['nombres'])
 
   else :
+
+    return redirect(url_for('index'))
+
+@app.route('/cayudas')
+def ayudas()->'html':
+  if 'cedula' in session:
+
+    # metrica veces que el usuario accede a ayudas en linea
+    snayudas=int(session['e_nayudas'])+1
+    session['e_nayudas']=snayudas #Variable que al terminar la session se carga en BD.
+
+
+    return render_template('cliente/ayudas.html', titulo='Ayudas en Linea')
+
+  else:
 
     return redirect(url_for('index'))
 
@@ -168,7 +196,17 @@ def catalogo_cliente()->'html':
   if 'cedula' in session:
 
     data = verproductos()
-    #print(data)
+
+    #Metrica de Entendibilidad :
+    #Tiempo que pasa entre cambio de pagina de inicio a catalogo
+
+    times=session['init_tiempo']
+    calculo_tiempo=round(time.time()-times)
+
+    if session['e_tiempop'] == 0:
+      session['e_tiempop']=calculo_tiempo
+
+
 
     return render_template('cliente/catalogo.html', titulo='Catalogo de Productos',data=data)
 
@@ -225,12 +263,18 @@ def pedidos()->'html':
 
     cedula=str(session['cedula'])
     data=carrito_cliente(cedula)
-    print(data)
+    #print(data)
     suma_total = 0
 
     for tupla in data:
       valor_decimal = tupla[4]
       suma_total += float(valor_decimal)
+
+    if suma_total == 0:
+      bandera_tarjeta="disabled"
+    else :
+      bandera_tarjeta=""
+
 
     return render_template(
       'cliente/pedidos.html',
@@ -239,7 +283,8 @@ def pedidos()->'html':
       nom=str(session['nombres']),
       ced=str(session['cedula']),
       cor=str(session['correo']),
-      sum=suma_total
+      sum=suma_total,
+      btn=bandera_tarjeta
     )
 
   else:
@@ -271,8 +316,13 @@ def compra_finalizada()->'html':
    cedula=session['cedula']
    fecha_actual = datetime.now().date()
 
+   #Entendibilidad : Numero de Errores en el campo de tarjeta exactamente en numero y cv
+   errores=request.form.get('errores')
+   session['e_nerrores']=errores
+
    res=pedido_exitoso(cedula,fecha_actual,total)
    rese= eliminar_carrito(cedula)
+
 
    if res and rese :
      flash('Pedido realizado con Exito, dirigite a Comprobantes para visualizar el documento.')
@@ -344,6 +394,14 @@ def prestamos()->'html':
 
 @app.route('/logout')
 def cerrarsesion()->'html':
+    #session['e_nayudas'] = 0
+    #session['e_pcerradas'] = 0
+    #session['e_nerrores'] = 0
+    #session['e_tiempop'] = 0
+  fecha = datetime.now()
+  fechas = fecha.date()
+  entendibilidad(session['e_nayudas'],session['e_pcerradas'], session['e_nerrores'], session['e_tiempop'], fechas)
+
   session.clear()
 
   return redirect(url_for('index'))
