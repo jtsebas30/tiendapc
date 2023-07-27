@@ -157,6 +157,14 @@ def ingresou()->'html':
     session['e_tiempop'] = 0
     session['init_tiempo']=time.time()
 
+    #EFECTIVIDAD
+    session['ef_transaccionesd']=0
+    session['ef_sesionesd']=0
+
+    #EFICIENCIA
+    session['efc_tiempoinicio']=time.time() #Se inicia el conteo desde que inicia la sesion y finaliza hasta q se complete una compra.
+    session['efc_tiempometrica']=0
+    session['efc_ntransacciones']=0
     ###########################
 
     return redirect(url_for('index_cliente'))
@@ -263,8 +271,19 @@ def pedidos()->'html':
 
     cedula=str(session['cedula'])
     data=carrito_cliente(cedula)
-    #print(data)
     suma_total = 0
+
+    #Metrica de efectividad numero de transacciones diarias abandonadas.
+    session['ef_transaccionesd'] = len(data)
+
+    #Metrica de efectividad numero de sessiones abandonadas
+
+    if len(data)>0:
+
+      session['ef_sesionesd']=1 #Indica 1 que al menos un producto quedo en el carrito como pendiente de pago
+    else:
+      session['ef_sesionesd']=0 #Indica 0 que el carrito no tiene transacciones pendientes por lo tanto no existen sessiones abandonada.s
+
 
     for tupla in data:
       valor_decimal = tupla[4]
@@ -326,6 +345,15 @@ def compra_finalizada()->'html':
 
    if res and rese :
      flash('Pedido realizado con Exito, dirigite a Comprobantes para visualizar el documento.')
+     #Metrica de Eficiencia : Tiempo en completar una transaccion
+
+     times_tran = session['efc_tiempoinicio']
+     calculo_tiempo_transaccion = round(time.time() - times_tran)
+     session['efc_tiempometrica'] = calculo_tiempo_transaccion
+
+     eficiencia(session['efc_tiempometrica'],1,fecha_actual)
+      
+
      return redirect(url_for('pedidos'))
    else:
       flash('Ocurrio un Error al realizar el pedido,intentalo más adelante.')
@@ -400,7 +428,12 @@ def cerrarsesion()->'html':
     #session['e_tiempop'] = 0
   fecha = datetime.now()
   fechas = fecha.date()
+
+  #Ingreso de datos para entendibildad
   entendibilidad(session['e_nayudas'],session['e_pcerradas'], session['e_nerrores'], session['e_tiempop'], fechas)
+  # Ingreso de datos para efectividad
+  efectividad(session['ef_transaccionesd'],session['ef_sesionesd'],fechas)
+
 
   session.clear()
 
