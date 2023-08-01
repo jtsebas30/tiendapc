@@ -30,32 +30,88 @@
                 <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
                     <ul class="navbar-nav ms-auto navbar-nav-scroll">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+                            <a class="nav-link active" aria-current="page" href="/">开始</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/catalogo">Productos</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/info">Información</a>
+                            <a class="nav-link" href="/catalogo">产品</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/registro">Registro</a>
+                            <a class="nav-link" href="/info">信息</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registro">记录</a>
                         </li>
 
                     </ul>
                     <span class="nav-item">
-                        <a class="btn-outline-sm" href="/login">Iniciar Sesion</a>
+                        <a class="btn-outline-sm" href="/login">登录</a>
                     </span>
                 </div> <!-- end of navbar-collapse -->
             </div> <!-- end of container -->
         </nav> <!-- end of navbar -->
         <!-- end of navigation -->
 
-  {% block body %}
+<!-- Header -->
 
-  {% endblock %}
+        <header id="header" class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="text-container">
+                            <h1 class="h1-large">欢迎来到康普科<span class="replace-me">价格优惠，购买前要求测试，优质产品</span></h1>
+                            <p class="p-large">
+
+                                CompuEc 是一家在线商店，它将彻底改变该国的技术市场。
+
+
+                            </p>
+                            <a class="btn-solid-lg" href="/catalogo">查看我们的目录</a>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              <img src="/static/assets/traducir.png" alt="logo" width="8%">
+                            </button>
+
+
+                        </div> <!-- end of text-container -->
+                    </div> <!-- end of col -->
+                    <div class="col-lg-6">
+                        <div class="image-container">
+                            <img class="img-fluid" src="./static/assets/header-illustration.svg" alt="alternative">
+                        </div> <!-- end of image-container -->
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </header> <!-- end of header -->
+        <!-- end of header -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">可用语言</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+          <a class="btn btn-primary" href="/" role="button">西班牙语</a>
+          <a class="btn btn-primary" href="/qc" role="button">克丘亚语</a>
+          <a class="btn btn-primary" href="/fr" role="button">法语</a>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
    <div class="floating-button" id="floatingButton">
         <div class="button-text"><img src="/static/assets/chatbot.png" alt="logo" width="100%"></div>
@@ -64,14 +120,14 @@
     <div class="chat-container" id="chatContainer">
         <div class="chat-header">
             <div class="close-button" id="closeButton">&times;</div>
-            <h2><img src="/static/assets/chatbot.png" alt="logo" width="20%"> Chat </h2>
+            <h2><img src="/static/assets/chatbot.png" alt="logo" width="20%"> 聊天 </h2>
         </div>
         <div class="chat-body" id="chatBody">
             <!-- Aquí se mostrarán los mensajes del chat -->
         </div>
         <div class="chat-footer">
             <input type="text" id="userInput" placeholder="Escribe aquí tu mensaje...">
-            <button onclick="sendMessage()">Enviar</button>
+            <button onclick="sendMessage()">发送</button>
         </div>
     </div>
 
@@ -82,20 +138,20 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="footer-col first">
-                            <h6>Acerca de :</h6>
-                            <p class="p-small"> Tienda de electrónica COMPUEC dedicada al comercio de  computadoras de marcas mas importantes del mundo.</p> </p>
+                            <h6>关于 :</h6>
+                            <p class="p-small"> COMPUEC 电子商店致力于销售世界上最重要品牌的计算机。</p> </p>
                         </div> <!-- end of footer-col -->
                         <div class="footer-col second">
-                            <h6>Links</h6>
+                            <h6>链接</h6>
                             <ul class="list-unstyled li-space-lg p-small">
-                                <li>Importante: <a href="/info">Información</a>,<a href="/metricas">Ver Metricas de Proyecto</a></li>
-                                <li>Compras: <a href="/catalogo">Productos</a></li>
-                                <li>Usuarios: <a href="/registro">Registro de Nuevos Clientes</a>, <a href="/login">Iniciar Sesion</a></li>
+                                <li>重要的: <a href="/info">信息</a>,<a href="/metricas">查看项目指标</a></li>
+                                <li>购物: <a href="/catalogo">产品</a></li>
+                                <li>用户: <a href="/registro">新客户注册</a>, <a href="/login">登录</a></li>
                             </ul>
                         </div> <!-- end of footer-col -->
                         <div class="footer-col third">
 
-                             <p class="p-small">Contactos :  <a href="#"><strong>ventas@compuec.com.ec</strong></a></p>
+                             <p class="p-small">联系方式 :  <a href="#"><strong>ventas@compuec.com.ec</strong></a></p>
                         </div> <!-- end of footer-col -->
                     </div> <!-- end of col -->
                 </div> <!-- end of row -->
@@ -109,7 +165,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <p class="p-small">Copyright © <a href="#">CompuEc 2023</a></p>
+                        <p class="p-small">版权 © <a href="#">CompuEc 2023</a></p>
                     </div> <!-- end of col -->
 
 

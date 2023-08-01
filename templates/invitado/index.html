@@ -3,6 +3,7 @@
 {% block body %}
 
  <!-- Header -->
+
         <header id="header" class="header">
             <div class="container">
                 <div class="row">
@@ -16,6 +17,13 @@
 
                             </p>
                             <a class="btn-solid-lg" href="/catalogo">Mira nuestro Catalogo</a>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              <img src="/static/assets/traducir.png" alt="logo" width="8%">
+                            </button>
+
+
                         </div> <!-- end of text-container -->
                     </div> <!-- end of col -->
                     <div class="col-lg-6">
@@ -29,6 +37,28 @@
         <!-- end of header -->
 
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Idiomas Disponibles</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
 
+          <a class="btn btn-primary" href="/qc" role="button">Kichwa</a>
+          <a class="btn btn-primary" href="/ch" role="button">Chino</a>
+          <a class="btn btn-primary" href="/fr" role="button">Frances</a>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

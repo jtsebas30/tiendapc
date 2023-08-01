@@ -47,3 +47,47 @@ def eficiencia(ttransaccion, nctransacciones, fecha):
     except (Exception, psycopg2.DatabaseError) as error:
         print("Error:", error)
         return False
+
+
+def verEntendibilidad():
+    try:
+        sql = "SELECT * FROM ENTENDIBILIDAD"
+        cursor = db.cursor()
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        cursor.close()
+
+        return data
+    except (Exception,psycopg2.DatabaseError) as error:
+        db.close()
+        print("Error:",error)
+        return None
+
+def verEfectividad():
+    try:
+        sql = "SELECT * FROM EFECTIVIDAD"
+        cursor = db.cursor()
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        cursor.close()
+
+        return data
+    except (Exception,psycopg2.DatabaseError) as error:
+        db.close()
+        print("Error:",error)
+        return None
+
+
+def verEficiencia():
+    try:
+        sql = "SELECT * FROM EFICIENCIA"
+        cursor = db.cursor()
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        cursor.close()
+
+        return data
+    except (Exception,psycopg2.DatabaseError) as error:
+        db.close()
+        print("Error:",error)
+        return None

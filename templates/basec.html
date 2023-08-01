@@ -11,6 +11,7 @@
     <link href="./../static/css/fontawesome-all.min.css" rel="stylesheet">
     <link href="./../static/css/swiper.css" rel="stylesheet">
     <link href="./../static/css/styles.css" rel="stylesheet">
+    <link href="./static/css/chat.css" rel="stylesheet">
 
     <title>{{ titulo }}</title>
 </head>
@@ -60,6 +61,24 @@
   {% block body %}
 
   {% endblock %}
+
+ <div class="floating-button" id="floatingButton">
+        <div class="button-text"><img src="/static/assets/chatbot.png" alt="logo" width="100%"></div>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <div class="close-button" id="closeButton">&times;</div>
+            <h2><img src="/static/assets/chatbot.png" alt="logo" width="20%"> Chat </h2>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <!-- Aquí se mostrarán los mensajes del chat -->
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="userInput" placeholder="Escribe aquí tu mensaje...">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
 
   <!-- Footer -->
         <div class="footer">
@@ -116,6 +135,7 @@
     <script src="./../static/js/replaceme.min.js"></script> <!-- ReplaceMe for rotating text -->
     <script src="./../static/js/scripts.js"></script> <!-- Custom scripts -->
     <script src="./../static/js/tarjeta.js"></script> <!-- Custom scripts -->
+<script src="./static/js/chat_c.js"></script>
 </body>
 
 

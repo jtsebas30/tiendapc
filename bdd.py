@@ -220,3 +220,19 @@ def cliente_solicitudes(cedula):
         db.close()
         print("Error:",error)
         return None
+
+
+def verCatalogoFiltado(categoria):
+    try:
+        sql = "SELECT * FROM PRODUCTOS WHERE MARCA = %s"
+        valores = (categoria,)
+        cursor = db.cursor()
+        cursor.execute(sql,valores)
+        data = cursor.fetchall()
+
+        return data
+    except (Exception,psycopg2.DatabaseError) as error:
+        db.close()
+        print("Error:",error)
+        return None
+

@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from bdd import *
 from datetime import datetime
@@ -14,21 +13,62 @@ kernel = aiml.Kernel()
 kernel.learn("bot.aiml")
 
 
-@app.route('/pr')
+@app.route('/metricas')
 
-def prueba() -> 'html':
-  return render_template('invitado/dcatalogo.html',titulo ='Inicio')
+def metricas() -> 'html':
+
+  d_entendibilidad=verEntendibilidad()
+  d_efectividad=verEfectividad()
+  d_eficiencia=verEficiencia()
+
+
+  return render_template('admin/metricas.html',titulo ='Metricas',ent=d_entendibilidad,efc=d_efectividad,efa=d_eficiencia)
 
 @app.route('/')
 
 def index() -> 'html':
   return render_template('invitado/index.html',titulo ='Inicio')
 
+
+@app.route('/qc')
+
+def index_qc() -> 'html':
+  return render_template('invitado/index_qc.html',titulo ='Kallariy')
+
+
+@app.route('/ch')
+
+def index_ch() -> 'html':
+  return render_template('invitado/index_ch.html',titulo ='开始')
+
+
+@app.route('/fr')
+
+def index_fr() -> 'html':
+  return render_template('invitado/index_fr.html',titulo ='Début')
+
+
+
 @app.route("/get_response", methods=["POST"])
 def get_response():
+
     user_message = request.form["user_message"]
     response = kernel.respond(user_message)
     return str(response)
+
+
+@app.route("/get_response_c", methods=["POST"])
+def get_response_c():
+  user_message = request.form["user_message"]
+  response = kernel.respond(user_message)
+  print("INGRESO AL CHATBOT DE CLIENTE")
+  return str(response)
+
+
+@app.route('/info')
+
+def info() -> 'html':
+  return render_template('invitado/ayudas.html',titulo ='Ayudas')
 
 @app.route('/login')
 
@@ -72,7 +112,10 @@ def registro() -> 'html':
 def catalogo() -> 'html':
 
   data=verproductos()
-  return render_template('invitado/catalogo.html',titulo ='Nuestros Productos',data=data)
+  data1=verCatalogoFiltado("Asus")
+  data2=verCatalogoFiltado("Lenovo")
+  data3=verCatalogoFiltado("Dell")
+  return render_template('invitado/catalogo.html',titulo ='Nuestros Productos',data=data,data1=data1,data2=data2,data3=data3)
 
 @app.route('/detalle',methods=['GET'])
 
@@ -204,6 +247,9 @@ def catalogo_cliente()->'html':
   if 'cedula' in session:
 
     data = verproductos()
+    data1 = verCatalogoFiltado("Asus")
+    data2 = verCatalogoFiltado("Lenovo")
+    data3 = verCatalogoFiltado("Dell")
 
     #Metrica de Entendibilidad :
     #Tiempo que pasa entre cambio de pagina de inicio a catalogo
@@ -215,8 +261,7 @@ def catalogo_cliente()->'html':
       session['e_tiempop']=calculo_tiempo
 
 
-
-    return render_template('cliente/catalogo.html', titulo='Catalogo de Productos',data=data)
+    return render_template('cliente/catalogo.html', titulo='Catalogo de Productos',data=data,data1=data1,data2=data2,data3=data3)
 
   else:
 
@@ -352,7 +397,7 @@ def compra_finalizada()->'html':
      session['efc_tiempometrica'] = calculo_tiempo_transaccion
 
      eficiencia(session['efc_tiempometrica'],1,fecha_actual)
-      
+
 
      return redirect(url_for('pedidos'))
    else:

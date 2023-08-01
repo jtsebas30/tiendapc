@@ -29,11 +29,11 @@ MARCAS
     <div class="col-8">
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-            <div class="row gx-3 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center">
+            <div class="row gx-3 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center" style="gap:20px">
 
                 {% for datos in data %}
-                    <div class="card" style="width: 18rem;">
-                          <img src=".././static/assets/{{datos[6]}}" class="card-img-top" alt="{{datos[6]}}">
+                    <div class="card mb-4" style="width: 18rem;background-color:#BFF074;">
+                          <img src=".././static/assets/{{datos[6]}}" class="card-img-top mt-2" alt="{{datos[6]}}">
                           <div class="card-body">
                             <h5 class="card-title">{{datos[1]}}</h5>
                             <p class="card-text"><b>Marca :{{datos[3]}} </b> </p>
@@ -44,9 +44,70 @@ MARCAS
                 {% endfor %}
             </div>
         </div>
-        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">En Desarrollo</div>
-        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">No Disponible en construcción</div>
-        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">En Desarrollo</div>
+        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+
+             <div class="row gx-3 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center" style="gap:20px">
+
+                {% for datos in data1 %}
+                    <div class="card mb-4" style="width: 18rem;background-color:#BFF074;">
+                          <img src=".././static/assets/{{datos[6]}}" class="card-img-top mt-2" alt="{{datos[6]}}">
+                          <div class="card-body">
+                            <h5 class="card-title">{{datos[1]}}</h5>
+                            <p class="card-text"><b>Marca :{{datos[3]}} </b> </p>
+                                <p class="card-text"><b>Precio :{{datos[5]}} </b> </p>
+                            <a href="/detalle?id={{ datos[0] }}" class="btn btn-primary">Más Información</a>
+                          </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+
+        </div>
+        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+
+             <div class="row gx-3 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center" style="gap:20px">
+
+                {% for datos in data2 %}
+                    <div class="card mb-4" style="width: 18rem;background-color:#BFF074;">
+                          <img src=".././static/assets/{{datos[6]}}" class="card-img-top mt-2" alt="{{datos[6]}}">
+                          <div class="card-body">
+                            <h5 class="card-title">{{datos[1]}}</h5>
+                            <p class="card-text"><b>Marca :{{datos[3]}} </b> </p>
+                                <p class="card-text"><b>Precio :{{datos[5]}} </b> </p>
+                            <a href="/detalle?id={{ datos[0] }}" class="btn btn-primary">Más Información</a>
+                          </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+
+
+        </div>
+        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+
+
+            <div class="row gx-3 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center" style="gap:20px">
+
+                {% for datos in data3 %}
+                    <div class="card mb-4" style="width: 18rem;background-color:#BFF074;">
+                          <img src=".././static/assets/{{datos[6]}}" class="card-img-top mt-2" alt="{{datos[6]}}">
+                          <div class="card-body">
+                            <h5 class="card-title">{{datos[1]}}</h5>
+                            <p class="card-text"><b>Marca :{{datos[3]}} </b> </p>
+                                <p class="card-text"><b>Precio :{{datos[5]}} </b> </p>
+                            <a href="/detalle?id={{ datos[0] }}" class="btn btn-primary">Más Información</a>
+                          </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+
+
+
+        </div>
       </div>
     </div>
   </div>
