@@ -22,7 +22,10 @@
                 <div class="row">
                     <div class="col-xl-6 offset-xl-3">
                         <div class="text-box mt-5 mb-5">
-                            <p class="mb-4">Estimado Cliente, por favor complete todos los campos solicitados para crear su cuenta en nuestra tienda. Si ya dispone de una pulse en  <a class="blue" href="/login">Iniciar Sesion.</a></p>
+
+                            <p class="mb-4">Estimado Cliente, por favor complete todos los campos
+                                solicitados para crear su cuenta en nuestra tienda. Si ya dispone
+                                de una pulse en  <a class="blue" href="/login">Iniciar Sesión.</a></p>
 
                             {% with messages = get_flashed_messages(with_categories=true) %}
                               {% if messages %}
@@ -41,16 +44,35 @@
                                 <div class="mb-4 form-floating">
                                     <input type="text" class="form-control" id="cedula" name="cedula" onkeypress="return validarNumeros(event, 'cedula')" placeholder="XXXXXXXXX" minlength="10" maxlength="10" required>
                                     <label for="cedula">Cédula de Identidad</label>
+                                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-patch-question-fill"></i></a>
+                                     <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                          <div class="card card-body">
+                                            Escriba los 10 dígitos de la cedula. Por ejemplo, 17xxxxx10<br> Este campo solo acepta numeros.
+                                          </div>
+                                     </div>
+
                                 </div>
 
                                 <div class="mb-4 form-floating">
                                     <input type="text" class="form-control" id="Nombre" name="nombre" placeholder="Nombre"  onkeypress="validarSinNum(event, 'Nombre')" maxlength="50" required>
                                     <label for="Nombre">Nombres :</label>
+                                     <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-patch-question-fill"></i></a>
+                                     <div class="collapse multi-collapse" id="multiCollapseExample2">
+                                          <div class="card card-body">
+                                            Escriba su nombre por ejemplo: Juan.<br> Este campo no acepta números en el nombre.
+                                          </div>
+                                     </div>
                                 </div>
 
                                 <div class="mb-4 form-floating">
                                     <input type="text" class="form-control" id="Apellido" placeholder="Apellido" name="apellido" onkeypress="validarSinNum(event, 'Apellido')" maxlength="50" required>
                                     <label for="Apellido">Apellidos : </label>
+                                     <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-patch-question-fill"></i></a>
+                                     <div class="collapse multi-collapse" id="multiCollapseExample3">
+                                          <div class="card card-body">
+                                            Escriba su apellido por ejemplo: Diaz.<br> Este campo no acepta números en el apellido.
+                                          </div>
+                                     </div>
                                 </div>
 
                                 <div class="mb-4 form-floating">
@@ -63,23 +85,46 @@
                                         {% endfor %}
                                     </select>
                                   <label for="provincia">Provincia : </label>
-
+                                     <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample4" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-patch-question-fill"></i></a>
+                                     <div class="collapse multi-collapse" id="multiCollapseExample4">
+                                          <div class="card card-body">
+                                            Escoja la provincia en la cual reside actualmente.<br> Este campo es obligatorio.
+                                          </div>
+                                     </div>
                                 </div>
 
                                 <div class="mb-4 form-floating">
                                     <input type="text" class="form-control" id="domicilio" name="domicilio" placeholder="Direccion" maxlength="50" required>
                                     <label for="domicilio">Dirección Domiciliaria : </label>
+                                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample5" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-patch-question-fill"></i></a>
+                                     <div class="collapse multi-collapse" id="multiCollapseExample5">
+                                          <div class="card card-body">
+                                            Escriba la dirección exacta del domicilio de la siguiente manera (calle principal + calle secundaria + referencia). <br>Esta permitido usar numeraciones de casa, lotes o departamentos.
+                                          </div>
+                                     </div>
                                 </div>
 
                                 <div class="mb-4 form-floating">
                                     <input type="email" class="form-control" id="floatingInput" name="correo" placeholder="name@example.com" required>
                                     <label for="floatingInput">Correo Electronico : </label>
+                                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample6" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-patch-question-fill"></i></a>
+                                     <div class="collapse multi-collapse" id="multiCollapseExample6">
+                                          <div class="card card-body">
+                                            Escriba el correo electrónico personal o de uso frecuente. Recuerde que el correo siempre va acompañado del @. Por ejemplo ejemplo@gmail.com.
+                                          </div>
+                                     </div>
                                 </div>
 
                                 <div class="mb-4 form-floating">
                                     <input type="password" class="form-control" id="contrasena" name="contrasenia" placeholder="Password" oninput="validarContrasena()" minlength="8" maxlength="16" required>
                                     <p id="mensaje"></p>
                                     <label for="contrasena">Ingrese una Contraseña: </label>
+                                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample7" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-patch-question-fill"></i></a>
+                                     <div class="collapse multi-collapse" id="multiCollapseExample7">
+                                          <div class="card card-body">
+                                            La contraseña debe tener una longitud entre 8 y 16 caracteres. Los puede acompañar de símbolos para mayor seguridad.
+                                          </div>
+                                     </div>
                                 </div>
                                 <div class="mb-4 form-check">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
@@ -97,5 +142,7 @@
         <!-- end of basic -->
 
  <script src="./../static/js/registro.js"></script>
+
+
 
 {% endblock %}
