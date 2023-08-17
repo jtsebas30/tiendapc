@@ -62,6 +62,8 @@ def get_response_c():
   user_message = request.form["user_message"]
   response = kernel.respond(user_message)
   print("INGRESO AL CHATBOT DE CLIENTE")
+  snayudas = int(session['e_nayudas']) + 1
+  session['e_nayudas'] = snayudas  # Variable que al terminar la session se carga en BD.
   return str(response)
 
 
@@ -139,7 +141,7 @@ def nuevouser()->'html':
 
 
   v_cedula=validar_userxcedula(cedula)
-  v_correo=validar_userxcedula(correo)
+  v_correo=validar_correo(correo)
 
 
   if v_cedula !=[]:
@@ -205,9 +207,11 @@ def ingresou()->'html':
     session['ef_sesionesd']=0
 
     #EFICIENCIA
+
     session['efc_tiempoinicio']=time.time() #Se inicia el conteo desde que inicia la sesion y finaliza hasta q se complete una compra.
     session['efc_tiempometrica']=0
     session['efc_ntransacciones']=0
+    session['tiempo_paginas_init']=0
     ###########################
 
     return redirect(url_for('index_cliente'))
@@ -321,7 +325,9 @@ def pedidos()->'html':
     #Metrica de efectividad numero de transacciones diarias abandonadas.
     session['ef_transaccionesd'] = len(data)
 
-    #Metrica de efectividad numero de sessiones abandonadas
+    #Metrica de entendibilidad numero de paginas rapidamente abandonadas
+    session['tiempo_paginas_init']=time.time()
+
 
     if len(data)>0:
 
@@ -397,7 +403,9 @@ def compra_finalizada()->'html':
      session['efc_tiempometrica'] = calculo_tiempo_transaccion
 
      eficiencia(session['efc_tiempometrica'],1,fecha_actual)
-
+     #session['efc_tiempometrica']=0
+     session['efc_tiempoinicio'] = 0
+     session['efc_tiempoinicio'] = time.time()
 
      return redirect(url_for('pedidos'))
    else:
@@ -453,6 +461,19 @@ def prestamos()->'html':
   if 'cedula' in session:
 
     data=cliente_solicitudes(session['cedula'])
+
+
+    times = session['tiempo_paginas_init']
+
+
+    calculo=round(time.time()-times)
+
+    #Metrica de paginas cerradas
+
+    if calculo <4:
+      session['e_pcerradas']=session['e_pcerradas']+1
+
+    session['tiempo_paginas_init']=0
 
     return render_template(
       'cliente/prestamos.html',
